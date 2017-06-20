@@ -28,9 +28,12 @@
             <template ngFor let-crit [ngForOf]="confServ.criteriaSet?.getCriteriaArray()">
                 <div class="col-md-6">
                     <div class="form-group">
-                        <label>
-                            {{crit.name}}
-                        </label>
+                        <ptooltip [tooltip]="crit.description">
+                            <label>
+                                {{crit.name}}
+                                <span class="search-indicator">({{crit.and_search ? "match all" : "match one"}})</span>
+                            </label>
+                        </ptooltip>
                         <select2 [options]="crit.values" [placeholder]="crit.placeholder"
                                  (result)="criteriaChanged($event, crit)"></select2>
                     </div>
@@ -87,6 +90,10 @@
                 <pitem>
                     <pcheckbox [checked]="confServ.comparison.displaytemplate" (checkedChange)="changeDisplayTemplate()"
                                [label]="'Display Template'"></pcheckbox>
+                </pitem>
+                <pitem>
+                    <pcheckbox [checked]="confServ.comparison.displayall" (checkedChange)="changeDisplayAll()"
+                               [label]="'Show Uncompared'"></pcheckbox>
                 </pitem>
                 <h6>Latex</h6>
                 <pitem>
@@ -172,6 +179,6 @@
         This is an <a href="http://ultimate-comparisons.github.io/">Ultimate Comparison</a> | content licensed under <a
             rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/"><img
             alt="Creative Commons License CC-BY-SA 4.0" style="border-width:0"
-            src="https://i.creativecommons.org/l/by-sa/4.0/88x31.png"/></a>
+            src="https://i.creativecommons.org/l/by-sa/4.0/88x31.png"/></a> | <a [href]="getVersionInformation()?.link">{{getVersionInformation()?.commit?.substr(0, 8) + " (" + (getVersionInformation()?.date | date: ("yyyy-MM-dd")) + ")"}}</a>
     </div>
 </div>
